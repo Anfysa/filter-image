@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-src = cv2.imread("iabloki_krasnyj_frukt_188738_1280x720.jpg")
+src = cv2.imread("5181.jpg")
 
 hsv_image = cv2.cvtColor(src, cv2.COLOR_BGR2HSV)
 
@@ -15,20 +15,18 @@ mask_red = cv2.inRange(hsv_image, lower_red, upper_red)
 # Примените маску к исходному изображению, чтобы оставить только красное яблоко в цвете
 result = cv2.bitwise_and(src, src, mask=mask_red)
 
-red_mask = cv2.bitwise_and(src, src, mask=mask_red)
+# Создайте желтый цвет (в HSV)
+y_hue = 60  # Желтый оттенок
+y_saturation = 255  # Полная насыщенность
+y_value = 255  # Максимальное значение яркости
+y_color = np.array([y_hue, y_saturation, y_value])
 
-# Создайте зеленый цвет (в HSV)
-green_hue = 60  # Зеленый оттенок
-green_saturation = 255  # Полная насыщенность
-green_value = 255  # Максимальное значение яркости
-green_color = np.array([green_hue, green_saturation, green_value])
+# Создайте желтиую маску для изменения цвета
+y_mask = np.zeros_like(src)
+y_mask[mask_red != 0] = y_color
 
-# Создайте зеленую маску для изменения цвета
-green_mask = np.zeros_like(src)
-green_mask[mask_red != 0] = green_color
-
-# Измените цвет предмета на зеленый
-result1 = cv2.add(red_mask, green_mask)
+# Измените цвет предмета на желтый
+result1 = cv2.add(result, y_mask)
 
 while True:
   cv2.imshow("1", src)
@@ -39,3 +37,4 @@ while True:
       break
   
 cv2.destroyAllWindows()
+

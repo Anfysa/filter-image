@@ -16,7 +16,7 @@ mask_red = cv2.inRange(hsv_image, lower_red, upper_red)
 result = cv2.bitwise_and(src, src, mask=mask_red)
 
 # Создайте желтый цвет (в HSV)
-y_hue = 60  # Желтый оттенок
+y_hue = 120  # Желтый оттенок
 y_saturation = 255  # Полная насыщенность
 y_value = 255  # Максимальное значение яркости
 y_color = np.array([y_hue, y_saturation, y_value])
